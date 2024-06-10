@@ -3,7 +3,6 @@ const axios = require('axios');
 const polyline = require('@mapbox/polyline');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const Progress = require('../models/Progress');
 const auth = require('../middleware/auth');
 const router = express.Router();
 const { spawn } = require('child_process');
@@ -96,7 +95,7 @@ router.get('/activities', auth, async (req, res) => {
         await user.save();
 
         // Usar spawn em vez de exec
-        const child = spawn('node', ['scripts/reverseGeocoding.js', user._id.toString()]);
+        const child = spawn('node', ['scripts/reverseGeocoding.js']);
 
         child.stdout.on('data', (data) => {
             console.log(`stdout: ${data}`);
@@ -132,21 +131,6 @@ router.get('/activities/data', auth, async (req, res) => {
     } catch (error) {
         console.error('Erro ao obter dados de atividades:', error);
         res.status(500).send({ message: 'Erro ao obter dados de atividades.', error });
-    }
-});
-
-// Novo endpoint para obter o progresso
-router.get('/progress', auth, async (req, res) => {
-    try {
-        const progress = await Progress.findOne({ userId: req.user._id });
-        if (!progress) {
-            return res.status(404).send({ message: 'Progresso não encontrado.' });
-        }
-
-        res.json(progress);
-    } catch (error) {
-        console.error('Erro ao obter o progresso:', error);
-        res.status(500).send({ message: 'Erro ao obter o progresso.', error });
     }
 });
 

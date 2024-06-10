@@ -45,33 +45,3 @@ document.getElementById('logout-button').addEventListener('click', () => {
 
 // Chama a função para carregar atividades ao carregar a página do dashboard
 window.onload = loadActivities;
-
-// Código para atualizar a barra de progresso periodicamente
-document.addEventListener('DOMContentLoaded', () => {
-    const progressBarFill = document.getElementById('progress-bar-fill');
-    const estimatedTimeElem = document.getElementById('estimated-time');
-    const token = localStorage.getItem('token');
-
-    const fetchProgress = async () => {
-        try {
-            const response = await fetch('/api/progress', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            if (response.ok) {
-                progressBarFill.style.width = `${data.progress}%`;
-                progressBarFill.textContent = `${data.progress.toFixed(2)}%`;
-                estimatedTimeElem.textContent = `Tempo estimado: ${Math.round(data.estimatedTime)} segundos`;
-            } else {
-                console.error('Erro ao obter progresso:', data);
-            }
-        } catch (error) {
-            console.error('Erro ao obter progresso:', error);
-        }
-    };
-
-    // Atualiza a barra de progresso a cada 5 segundos
-    setInterval(fetchProgress, 5000);
-});
