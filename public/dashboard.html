@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Adicione o estilo da barra de progresso */
+        #progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+        }
+        #progress-bar-fill {
+            height: 30px;
+            width: 0%;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('img/wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header {
+            background-color: rgba(139, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: space-between; /* Adiciona espaço entre os itens */
+            align-items: center;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #strava-button, #logout-button {
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        #strava-button:hover, #logout-button:hover {
+            background-color: #6B0000;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cabeçalho da página -->
+<div class="header">
+    <h1>Visitar Portugal byBike</h1>
+    <button id="logout-button">Logout</button> <!-- Botão de logout -->
+</div>
+
+<!-- Container principal -->
+<div class="container">
+    <h1>Bem-vindo ao Dashboard</h1>
+    <button id="strava-button">Ligar ao Strava</button>
+    <!-- Barra de progresso -->
+    <div id="progress-bar">
+        <div id="progress-bar-fill">0%</div>
+    </div>
+    <p id="estimated-time">Tempo estimado: -- segundos</p>
+</div>
+
+<!-- Inclui o script JavaScript -->
+<script src="js/dashboard.js"></script>
+</body>
+</html>

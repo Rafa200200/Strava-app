@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura a viewport para uma boa apresentação em dispositivos móveis -->
+    <title>Visitar Portugal byBike</title> <!-- Título da página -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('img/wallpaper.jpg'); /* Imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header {
+            background-color: rgba(139, 0, 0, 0.8); /* Vermelho Tinto com opacidade */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"] {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #8B0000; /* Vermelho Tinto */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #6B0000; /* Tom mais escuro de vermelho */
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Visitar Portugal byBike</h1> <!-- Cabeçalho da página -->
+</div>
+
+<div class="container">
+    <h2>Registo/Login</h2> <!-- Título do formulário -->
+    <div class="form-container">
+        <input type="text" id="username" placeholder="Username"><br> <!-- Campo para o nome de usuário -->
+        <input type="password" id="password" placeholder="Password"><br> <!-- Campo para a senha -->
+        <button onclick="register()">Registar</button> <!-- Botão para registrar -->
+        <button onclick="login()">Login</button> <!-- Botão para fazer login -->
+    </div>
+</div>
+
+<script>
+    // Função para registrar um novo usuário
+    async function register() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Verifica se ambos os campos estão preenchidos
+        if (!username || !password) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        // Faz uma requisição POST para registrar o usuário
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        console.log(data); // Loga a resposta no console
+        alert(data.message); // Exibe a mensagem da resposta
+    }
+
+    // Função para fazer login do usuário
+    async function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Verifica se ambos os campos estão preenchidos
+        if (!username || !password) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        // Faz uma requisição POST para fazer login
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            // Armazena o token no localStorage e redireciona para o dashboard
+            localStorage.setItem('token', response.headers.get('x-auth-token'));
+            window.location.href = 'dashboard.html';
+        } else {
+            alert(data.message); // Exibe a mensagem de erro
+        }
+    }
+</script>
+
+</body>
+</html>
