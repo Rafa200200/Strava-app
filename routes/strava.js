@@ -91,7 +91,21 @@ router.get('/activities', auth, async (req, res) => {
             };
         }));
 
-        user.activities = detailedActivities;
+        // Inicializar user.activities se estiver undefined
+        if (!user.activities) {
+            user.activities = [];
+        }
+
+        // Verificar se há novas atividades
+        const newActivities = detailedActivities.filter(activity => {
+            return !user.activities.some(existingActivity => existingActivity.id === activity.id);
+        });
+
+        if (newActivities.length === 0) {
+            return res.send({ message: 'Sem novas atividades' });
+        }
+
+        user.activities = user.activities.concat(newActivities);
         await user.save();
 
         // Usar spawn em vez de exec
@@ -110,10 +124,10 @@ router.get('/activities', auth, async (req, res) => {
                 console.error(`Processo filho saiu com o código ${code}`);
             } else {
                 console.log('Script de reverse geocoding executado com sucesso');
+                res.send({ message: 'Script finalizado' });
             }
         });
 
-        res.send({ message: 'Atividades carregadas com sucesso e dados processados!', activities: detailedActivities });
     } catch (error) {
         console.error('Erro ao obter atividades do Strava:', error);
         res.status(500).send({ message: 'Erro ao obter atividades do Strava.', error });
