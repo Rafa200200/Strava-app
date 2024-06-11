@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        /* Adicione o estilo da barra de progresso */
         #progress-bar {
             width: 100%;
             background-color: #f3f3f3;
@@ -37,7 +36,7 @@
             background-color: rgba(139, 0, 0, 0.8);
             color: white;
             display: flex;
-            justify-content: space-between; /* Adiciona espaço entre os itens */
+            justify-content: space-between;
             align-items: center;
             padding: 10px;
             position: absolute;
@@ -66,6 +65,11 @@
         #strava-button:hover, #logout-button:hover {
             background-color: #6B0000;
         }
+        #status-message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -80,6 +84,7 @@
 <div class="container">
     <h1>Bem-vindo ao Dashboard</h1>
     <button id="strava-button">Ligar ao Strava</button>
+    <div id="status-message"></div>
 </div>
 
 <!-- Inclui o script JavaScript -->
