@@ -21,7 +21,9 @@ async function initializeMap() {
         const svg = d3.select("#map").append("svg")
             .attr("width", width)
             .attr("height", height);
-        
+
+        const g = svg.append("g");
+
         const projection = d3.geoMercator().fitSize([width, height], geojson);
         const path = d3.geoPath().projection(projection);
 
@@ -36,7 +38,7 @@ async function initializeMap() {
             .style("border-radius", "4px")
             .style("font-size", "12px");
 
-        svg.selectAll("path")
+        g.selectAll("path")
             .data(geojson.features)
             .enter().append("path")
             .attr("d", path)
@@ -55,6 +57,29 @@ async function initializeMap() {
             .on("mouseout", function() {
                 tooltip.style("visibility", "hidden");
             });
+
+        // Configurações de zoom
+        const zoom = d3.zoom()
+            .scaleExtent([1, 8])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+
+        svg.call(zoom);
+
+        // Função de zoom
+        function zoomIn() {
+            svg.transition().call(zoom.scaleBy, 1.3);
+        }
+
+        function zoomOut() {
+            svg.transition().call(zoom.scaleBy, 1 / 1.3);
+        }
+
+        // Eventos de clique nos botões de zoom
+        d3.select("#zoom-in").on("click", zoomIn);
+        d3.select("#zoom-out").on("click", zoomOut);
+
     }).catch(error => {
         console.error('Erro ao carregar o GeoJSON:', error);
     });
