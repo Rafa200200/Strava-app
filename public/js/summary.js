@@ -80,8 +80,82 @@ async function initializeMap() {
         d3.select("#zoom-in").on("click", zoomIn);
         d3.select("#zoom-out").on("click", zoomOut);
 
+        // Atualiza as estatísticas
+        updateStats(visitedCities, geojson);
+
     }).catch(error => {
         console.error('Erro ao carregar o GeoJSON:', error);
+    });
+}
+
+// Função para atualizar as estatísticas
+function updateStats(visitedCities, geojson) {
+    const totalConcelhos = geojson.features.length;
+    const visitedConcelhos = visitedCities.length;
+    const visitedConcelhosSet = new Set(visitedCities.map(city => city.toLowerCase()));
+    const concelhosVisitados = [];
+    const concelhosFaltantes = [];
+
+    // Calcula concelhos visitados e faltantes
+    geojson.features.forEach(feature => {
+        const concelho = feature.properties.Concelho;
+        if (visitedConcelhosSet.has(concelho.toLowerCase())) {
+            concelhosVisitados.push(concelho);
+        } else {
+            concelhosFaltantes.push(concelho);
+        }
+    });
+
+    const visitedPercent = (visitedConcelhos / totalConcelhos * 100).toFixed(2);
+
+    // Exibe porcentagem de concelhos visitados
+    document.getElementById('concelhos-percent').textContent = `Porcentagem de Concelhos Visitados: ${visitedPercent}%`;
+
+    // Exibe listas de concelhos visitados e faltantes
+    displayList('concelhos-visitados', concelhosVisitados);
+    displayList('concelhos-faltantes', concelhosFaltantes);
+
+    // Calcula e exibe porcentagem de distritos completos
+    const distritoConcelhos = geojson.features.reduce((acc, feature) => {
+        const distrito = feature.properties.Distrito;
+        if (!acc[distrito]) {
+            acc[distrito] = [];
+        }
+        acc[distrito].push(feature.properties.Concelho);
+        return acc;
+    }, {});
+
+    const distritosCompletos = [];
+    const distritosFaltantes = [];
+    let completeDistricts = 0;
+
+    for (const [distrito, concelhos] of Object.entries(distritoConcelhos)) {
+        const totalConcelhosDistrito = concelhos.length;
+        const visitedConcelhosDistrito = concelhos.filter(concelho => visitedConcelhosSet.has(concelho.toLowerCase())).length;
+        if (visitedConcelhosDistrito === totalConcelhosDistrito) {
+            distritosCompletos.push(distrito);
+            completeDistricts++;
+        } else {
+            distritosFaltantes.push(distrito);
+        }
+    }
+
+    const completeDistrictsPercent = (completeDistricts / Object.keys(distritoConcelhos).length * 100).toFixed(2);
+    document.getElementById('distritos-percent').textContent = `Porcentagem de Distritos Completos: ${completeDistrictsPercent}%`;
+
+    // Exibe listas de distritos completos e faltantes
+    displayList('distritos-completos', distritosCompletos);
+    displayList('distritos-faltantes', distritosFaltantes);
+}
+
+// Função para exibir listas de concelhos e distritos
+function displayList(elementId, items) {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = '';
+    items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
     });
 }
 

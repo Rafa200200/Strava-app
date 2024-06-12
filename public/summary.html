@@ -12,8 +12,8 @@
             background-color: #960f0f; /* Fundo cinzento claro */
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            align-items: flex-start;
             justify-content: center;
         }
         .header {
@@ -32,8 +32,41 @@
         }
         #map {
             height: 80%;
-            width: 90%;
+            width: 70%;
             margin-top: 60px;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #8b0000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 60px;
+            margin-left: 20px;
+            width: 25%;
+        }
+        .stats {
+            width: 100%;
+        }
+        .stats h2, .stats h3 {
+            margin: 10px 0;
+        }
+        .stats p {
+            margin: 5px 0;
+        }
+        .stats ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
         }
         .visited {
             fill: green;
@@ -78,6 +111,21 @@
     <div class="zoom-controls">
         <button id="zoom-in" class="zoom-button">+</button>
         <button id="zoom-out" class="zoom-button">-</button>
+    </div>
+    <div class="container">
+        <div class="stats">
+            <h2>Estatísticas</h2>
+            <p id="concelhos-percent"></p>
+            <p id="distritos-percent"></p>
+            <h3>Concelhos Visitados</h3>
+            <ul id="concelhos-visitados"></ul>
+            <h3>Concelhos por Visitar</h3>
+            <ul id="concelhos-faltantes"></ul>
+            <h3>Distritos Completos</h3>
+            <ul id="distritos-completos"></ul>
+            <h3>Distritos por Completar</h3>
+            <ul id="distritos-faltantes"></ul>
+        </div>
     </div>
 </body>
 </html>
