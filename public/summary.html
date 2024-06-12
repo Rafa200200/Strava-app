@@ -38,7 +38,7 @@
         .container {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 2px solid #8b0000;
@@ -54,17 +54,34 @@
         .stats {
             width: 100%;
             font-size: 14px;
+            height: 100%;
         }
-        .stats h2, .stats h3 {
+        .stats h2 {
             margin: 10px 0;
         }
         .stats p {
             margin: 5px 0;
+            font-weight: bold;
+        }
+        .stats .percent-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .stats .percent-box {
+            flex: 1;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #8b0000;
         }
         .stats .stat-group {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            height: 40%;
         }
         .stats .stat-box {
             flex: 1;
@@ -74,19 +91,14 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             border: 1px solid #8b0000;
+            display: flex;
+            flex-direction: column;
         }
-        .stats .stat-box p {
-            font-weight: bold;
-        }
-        .stats .half-box {
-            flex: 1;
-            margin: 0 5px;
-        }
-        .stats ul {
+        .stats .stat-box ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
-            max-height: 100px;
+            flex: 1;
             overflow-y: auto;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -139,26 +151,30 @@
     <div class="container">
         <div class="stats">
             <h2>Estatísticas</h2>
-            <div class="stat-group">
-                <p id="concelhos-percent" class="stat-box"></p>
-                <p id="distritos-percent" class="stat-box"></p>
+            <div class="percent-group">
+                <div class="percent-box">
+                    <p id="concelhos-percent"></p>
+                </div>
+                <div class="percent-box">
+                    <p id="distritos-percent"></p>
+                </div>
             </div>
             <div class="stat-group">
-                <div class="stat-box half-box">
+                <div class="stat-box">
                     <h3>Concelhos Visitados</h3>
                     <ul id="concelhos-visitados"></ul>
                 </div>
-                <div class="stat-box half-box">
+                <div class="stat-box">
                     <h3>Distritos Completos</h3>
                     <ul id="distritos-completos"></ul>
                 </div>
             </div>
             <div class="stat-group">
-                <div class="stat-box half-box">
+                <div class="stat-box">
                     <h3>Concelhos por Visitar</h3>
                     <ul id="concelhos-faltantes"></ul>
                 </div>
-                <div class="stat-box half-box">
+                <div class="stat-box">
                     <h3>Distritos por Completar</h3>
                     <ul id="distritos-faltantes"></ul>
                 </div>
