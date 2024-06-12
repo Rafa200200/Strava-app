@@ -22,6 +22,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/strava', stravaRoutes);
 
+// Servir o arquivo summary.html
+app.use(express.static('public'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor a correr na porta ${PORT}`);

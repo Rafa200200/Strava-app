@@ -1,24 +1,22 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const nominatim = require('nominatim-client');
-const pLimit = require('p-limit'); // Biblioteca para limitar chamadas concorrentes
-const NodeCache = require('node-cache'); // Biblioteca de cache em memória
+const pLimit = require('p-limit');
+const NodeCache = require('node-cache');
 
-// Conecte-se ao MongoDB
 mongoose.connect('mongodb://localhost:27017/strava-app', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
 });
 
-// Configurar cliente Nominatim
 const client = nominatim.createClient({
     useragent: "myApp",
     referer: "http://localhost:3000"
 });
 
-const cache = new NodeCache({ stdTTL: 86400 }); // Cache com TTL de 1 dia
-const limit = pLimit(5); // Limitar a 5 chamadas concorrentes
+const cache = new NodeCache({ stdTTL: 86400 });
+const limit = pLimit(5);
 
 async function reverseGeocode(lat, lon) {
     const cacheKey = `${lat},${lon}`;
@@ -48,7 +46,7 @@ async function updateActivitiesWithLocations() {
     const users = await User.find();
     for (const user of users) {
         if (user.activities && user.activities.length > 0) {
-            let cities = new Set(user.myCity); // Usar Set para evitar duplicatas
+            let cities = new Set(user.myCity);
             const geocodePromises = [];
             for (const activity of user.activities) {
                 if (activity.coordinates && activity.coordinates.length > 0) {
@@ -68,8 +66,7 @@ async function updateActivitiesWithLocations() {
                 }
             }
             await Promise.all(geocodePromises);
-            user.myCity = Array.from(cities); // Converter Set para Array
-            // Save only myCity
+            user.myCity = Array.from(cities);
             await User.updateOne({ _id: user._id }, {
                 $set: {
                     myCity: user.myCity
@@ -80,4 +77,7 @@ async function updateActivitiesWithLocations() {
     console.log('Reverse geocoding completed and database updated.');
 }
 
-updateActivitiesWithLocations().then(() => mongoose.disconnect());
+updateActivitiesWithLocations().then(() => {
+    mongoose.disconnect();
+    console.log('Script de reverse geocoding executado com sucesso');
+});

@@ -91,12 +91,10 @@ router.get('/activities', auth, async (req, res) => {
             };
         }));
 
-        // Inicializar user.activities se estiver undefined
         if (!user.activities) {
             user.activities = [];
         }
 
-        // Verificar se há novas atividades
         const newActivities = detailedActivities.filter(activity => {
             return !user.activities.some(existingActivity => existingActivity.id === activity.id);
         });
@@ -108,7 +106,6 @@ router.get('/activities', auth, async (req, res) => {
         user.activities = user.activities.concat(newActivities);
         await user.save();
 
-        // Usar spawn em vez de exec
         const child = spawn('node', ['scripts/reverseGeocoding.js']);
 
         child.stdout.on('data', (data) => {
@@ -124,7 +121,7 @@ router.get('/activities', auth, async (req, res) => {
                 console.error(`Processo filho saiu com o código ${code}`);
             } else {
                 console.log('Script de reverse geocoding executado com sucesso');
-                res.send({ message: 'Script finalizado' });
+                res.send({ message: 'Script finalizado', redirectUrl: 'summary.html' });
             }
         });
 
@@ -145,6 +142,20 @@ router.get('/activities/data', auth, async (req, res) => {
     } catch (error) {
         console.error('Erro ao obter dados de atividades:', error);
         res.status(500).send({ message: 'Erro ao obter dados de atividades.', error });
+    }
+});
+
+router.get('/visited-cities', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).send({ message: 'Usuário não encontrado.' });
+        }
+
+        res.json({ myCity: user.myCity });
+    } catch (error) {
+        console.error('Erro ao obter dados dos concelhos visitados:', error);
+        res.status(500).send({ message: 'Erro ao obter dados dos concelhos visitados.', error });
     }
 });
 
