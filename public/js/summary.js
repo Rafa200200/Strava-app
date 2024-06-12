@@ -109,7 +109,7 @@ function updateStats(visitedCities, geojson) {
     const visitedPercent = (visitedConcelhos / totalConcelhos * 100).toFixed(2);
 
     // Exibe porcentagem de concelhos visitados
-    document.getElementById('concelhos-percent').textContent = `Percentagem de Concelhos Visitados: ${visitedPercent}%`;
+    document.getElementById('concelhos-percent').innerHTML = `Percentagem de Concelhos Visitados: <strong>${visitedPercent}%</strong>`;
 
     // Exibe listas de concelhos visitados e faltantes
     displayList('concelhos-visitados', concelhosVisitados);
@@ -141,7 +141,7 @@ function updateStats(visitedCities, geojson) {
     }
 
     const completeDistrictsPercent = (completeDistricts / Object.keys(distritoConcelhos).length * 100).toFixed(2);
-    document.getElementById('distritos-percent').textContent = `Percentagem de Distritos Completos: ${completeDistrictsPercent}%`;
+    document.getElementById('distritos-percent').innerHTML = `Percentagem de Distritos Completos: <strong>${completeDistrictsPercent}%</strong>`;
 
     // Exibe listas de distritos completos e faltantes
     displayList('distritos-completos', distritosCompletos);

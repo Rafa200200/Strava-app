@@ -75,6 +75,13 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             border: 1px solid #8b0000;
         }
+        .stats .stat-box p {
+            font-weight: bold;
+        }
+        .stats .half-box {
+            flex: 1;
+            margin: 0 5px;
+        }
         .stats ul {
             list-style-type: none;
             padding: 0;
@@ -137,21 +144,21 @@
                 <p id="distritos-percent" class="stat-box"></p>
             </div>
             <div class="stat-group">
-                <div class="stat-box">
+                <div class="stat-box half-box">
                     <h3>Concelhos Visitados</h3>
                     <ul id="concelhos-visitados"></ul>
                 </div>
-                <div class="stat-box">
+                <div class="stat-box half-box">
                     <h3>Distritos Completos</h3>
                     <ul id="distritos-completos"></ul>
                 </div>
             </div>
             <div class="stat-group">
-                <div class="stat-box">
+                <div class="stat-box half-box">
                     <h3>Concelhos por Visitar</h3>
                     <ul id="concelhos-faltantes"></ul>
                 </div>
-                <div class="stat-box">
+                <div class="stat-box half-box">
                     <h3>Distritos por Completar</h3>
                     <ul id="distritos-faltantes"></ul>
                 </div>
