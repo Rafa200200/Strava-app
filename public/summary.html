@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #960f0f; /* Fundo cinzento claro */
+            background-color: #960f0f; 
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -40,6 +40,15 @@
         }
         .not-visited {
             fill: #ccc;
+        }
+        .tooltip {
+            position: absolute;
+            visibility: hidden;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
         }
     </style>
     <script src="https://d3js.org/d3.v6.min.js"></script>

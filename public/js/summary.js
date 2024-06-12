@@ -25,6 +25,17 @@ async function initializeMap() {
         const projection = d3.geoMercator().fitSize([width, height], geojson);
         const path = d3.geoPath().projection(projection);
 
+        // Adiciona a tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("visibility", "hidden")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("color", "#fff")
+            .style("padding", "5px 10px")
+            .style("border-radius", "4px")
+            .style("font-size", "12px");
+
         svg.selectAll("path")
             .data(geojson.features)
             .enter().append("path")
@@ -32,7 +43,18 @@ async function initializeMap() {
             .attr("class", d => normalizedVisitedCities.includes(d.properties.Concelho.toLowerCase()) ? "visited" : "not-visited")
             .attr("fill", d => normalizedVisitedCities.includes(d.properties.Concelho.toLowerCase()) ? "green" : "#ccc")
             .attr("stroke", "#333")
-            .attr("stroke-width", 0.5);
+            .attr("stroke-width", 0.5)
+            .on("mouseover", function(event, d) {
+                tooltip.text(d.properties.Concelho)
+                    .style("visibility", "visible");
+            })
+            .on("mousemove", function(event) {
+                tooltip.style("top", (event.pageY - 10) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.style("visibility", "hidden");
+            });
     }).catch(error => {
         console.error('Erro ao carregar o GeoJSON:', error);
     });
