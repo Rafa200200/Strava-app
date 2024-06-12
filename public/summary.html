@@ -29,6 +29,26 @@
         }
         .header h1 {
             margin: 0;
+            flex: 1;
+            text-align: center;
+        }
+        .header .nav-buttons {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .nav-button {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            color: #960f0f;
         }
         #map {
             height: 80%;
@@ -141,6 +161,10 @@
 </head>
 <body>
     <div class="header">
+        <div class="nav-buttons">
+            <a href="dashboard.html" class="nav-button">Go Back</a>
+            <a href="index.html" class="nav-button">Logout</a>
+        </div>
         <h1>VisitarPortugalbyBike</h1>
     </div>
     <div id="map"></div>
