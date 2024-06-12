@@ -14,6 +14,7 @@ async function getUserVisitedCities() {
 // Função para inicializar o mapa
 async function initializeMap() {
     const visitedCities = await getUserVisitedCities();
+    const normalizedVisitedCities = visitedCities.map(city => city.toLowerCase());
     
     d3.json('/ContinenteConcelhos.json').then(function(geojson) {
         const width = 960, height = 600;
@@ -28,8 +29,8 @@ async function initializeMap() {
             .data(geojson.features)
             .enter().append("path")
             .attr("d", path)
-            .attr("class", d => visitedCities.includes(d.properties.NAME_2) ? "visited" : "not-visited")
-            .attr("fill", d => visitedCities.includes(d.properties.NAME_2) ? "green" : "#ccc")
+            .attr("class", d => normalizedVisitedCities.includes(d.properties.Concelho.toLowerCase()) ? "visited" : "not-visited")
+            .attr("fill", d => normalizedVisitedCities.includes(d.properties.Concelho.toLowerCase()) ? "green" : "#ccc")
             .attr("stroke", "#333")
             .attr("stroke-width", 0.5);
     }).catch(error => {
