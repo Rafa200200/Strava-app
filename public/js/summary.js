@@ -17,7 +17,7 @@ async function initializeMap() {
     const normalizedVisitedCities = visitedCities.map(city => city.toLowerCase());
     
     d3.json('/ContinenteConcelhos.json').then(function(geojson) {
-        const width = 960, height = 600;
+        const width = 700, height = 650;
         const svg = d3.select("#map").append("svg")
             .attr("width", width)
             .attr("height", height);

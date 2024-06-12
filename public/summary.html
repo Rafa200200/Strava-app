@@ -32,7 +32,7 @@
         }
         #map {
             height: 80%;
-            width: 70%;
+            width: 65%;
             margin-top: 60px;
         }
         .container {
@@ -46,11 +46,12 @@
             flex-direction: column;
             align-items: center;
             margin-top: 60px;
-            margin-left: 20px;
-            width: 25%;
+            margin-left: 10px;
+            width: 30%;
         }
         .stats {
             width: 100%;
+            font-size: 14px;
         }
         .stats h2, .stats h3 {
             margin: 10px 0;
@@ -62,7 +63,7 @@
             list-style-type: none;
             padding: 0;
             margin: 0;
-            max-height: 150px;
+            max-height: 100px;
             overflow-y: auto;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -115,16 +116,24 @@
     <div class="container">
         <div class="stats">
             <h2>Estatísticas</h2>
-            <p id="concelhos-percent"></p>
-            <p id="distritos-percent"></p>
-            <h3>Concelhos Visitados</h3>
-            <ul id="concelhos-visitados"></ul>
-            <h3>Concelhos por Visitar</h3>
-            <ul id="concelhos-faltantes"></ul>
-            <h3>Distritos Completos</h3>
-            <ul id="distritos-completos"></ul>
-            <h3>Distritos por Completar</h3>
-            <ul id="distritos-faltantes"></ul>
+            <div style="display: flex; justify-content: space-between;">
+                <p id="concelhos-percent" style="flex: 1; margin-right: 10px;"></p>
+                <p id="distritos-percent" style="flex: 1; margin-left: 10px;"></p>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="flex: 1; margin-right: 10px;">
+                    <h3>Concelhos Visitados</h3>
+                    <ul id="concelhos-visitados"></ul>
+                    <h3>Concelhos por Visitar</h3>
+                    <ul id="concelhos-faltantes"></ul>
+                </div>
+                <div style="flex: 1; margin-left: 10px;">
+                    <h3>Distritos Completos</h3>
+                    <ul id="distritos-completos"></ul>
+                    <h3>Distritos por Completar</h3>
+                    <ul id="distritos-faltantes"></ul>
+                </div>
+            </div>
         </div>
     </div>
 </body>
