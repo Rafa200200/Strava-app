@@ -8,7 +8,7 @@ const router = express.Router();
 const { spawn } = require('child_process');
 
 const STRAVA_CLIENT_ID = '124322';
-const STRAVA_CLIENT_SECRET = '52fb6a823b68da8bd2ac58434e1b0fad86ffb92e';
+const STRAVA_CLIENT_SECRET = '48459b94a1c389d376020afb7aa2a74c8b60303e';
 
 router.get('/callback', async (req, res) => {
     const code = req.query.code;
